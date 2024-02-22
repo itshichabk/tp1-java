@@ -34,7 +34,18 @@ public class Couleur{
         return c[2];
     }
 
+    public int getMoyenne()
+    {
+        return (c[0] + c[1] + c[2]) / 3;
+    }
+
     public int getByIndex(int index) {
         return c[index];
+    }
+
+    @Override
+    public String toString()
+    {
+        return "R: " + c[0] + ", G:" + c[1] + ", B:" + c[2];
     }
 }

@@ -37,6 +37,11 @@ public class Traducteur {
             ((ImageNoirBlanc) i).eclaircir_noircir(v);
     }
 
+    public static Couleur couleur_preponderante(Image i)
+    {
+        return ((ImageCouleur)i).couleur_preponderante();
+    }
+
     public static void initialize(boolean isColor)
     {
         color = isColor;
@@ -49,15 +54,17 @@ public class Traducteur {
 
     public static void main(String args[]) throws IOException
     {
-        File f = new File("test.pgm");
-        File nf = new File("ecrire.txt");
+        File f = new File("test.ppm");
+        File nf = new File("couleur.txt");
 
-        initialize(false);
+        initialize(true);
 
         lire(image, f);
 
-        eclaircir_noircir(image, 100);
+        System.out.println(couleur_preponderante(image));
 
-        ecrire(image, nf);
+        //eclaircir_noircir(image, 100);
+
+        //ecrire(image, nf);
     }
 }

@@ -24,9 +24,9 @@ public class ImageCouleur extends Image {
         in.nextLine();
         in.nextLine();
 
-        for(int i=  0; i < getHeight() - 1; i++)
+        for(int i=  0; i < getHeight(); i++)
         {
-            for(int j = 0; j < getWidth() - 1; j++)
+            for(int j = 0; j < getWidth(); j++)
             {
                 ((PixelCouleur)getPixel(i, j)).lire(in);
             }
@@ -55,5 +55,27 @@ public class ImageCouleur extends Image {
     public void eclaircir_noircir(int v)
     {
 
+    }
+
+    public Couleur couleur_preponderante()
+    {
+        int max = ((PixelCouleur)getPixel(0, 0)).getCouleurMoyenne();
+        int[] coordsMax = {0, 0};
+
+        for (int i = 0; i < getHeight(); i++)
+        {
+            for (int j = 0; j < getWidth(); j++)
+            {
+                if(((PixelCouleur)getPixel(i, j)).getCouleurMoyenne() > max)
+                {
+                    max = ((PixelCouleur)getPixel(i, j)).getCouleurMoyenne();
+
+                    coordsMax[0] = i;
+                    coordsMax[1] = j;
+                }
+            }
+        }
+
+        return ((PixelCouleur)getPixel(coordsMax[0], coordsMax[1])).getCouleur();
     }
 }
