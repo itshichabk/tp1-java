@@ -5,23 +5,15 @@ public class PixelCouleur  implements Pixel {
 
     private Couleur c; // R - 0 / G - 1 / B - 2
 
-<<<<<<< HEAD
+
     public PixelCouleur() {
         c = new Couleur();
     }
 
     public PixelCouleur(int r, int g, int b) {
         c = new Couleur(r, g, b);
-=======
-    public PixelCouleur()
-    {
-        c.setC(0, 0, 0);
     }
 
-    public PixelCouleur(int r, int g, int b) {
-        c.setC(r, g, b);
->>>>>>> parent of dca11a4 (probleme pixelCouleur réglé)
-    }
 
     public void eclaircir_noircir(int v, int max) {
 

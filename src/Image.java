@@ -60,6 +60,22 @@ public class Image {
 
     }
 
+    public boolean sontIdentiques(Image img)
+    {
+        if ((getWidth() != img.getWidth()) || (getHeight() != img.getHeight())
+                || (!Objects.equals(getNom(), img.getNom())) || (getMax() != img.getMax())) {
+            return false;
+        }
+        for (int i = 0; i < getHeight(); i++) {
+            for (int j = 0; j <getWidth(); j++) {
+                if (!Objects.equals(getPixel(i,j).toString(), img.getPixel(i,j).toString())) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
     public void pivoter90()
     {
 
@@ -75,4 +91,8 @@ public class Image {
         return height;
     }
 
+    public String getNom()
+    {
+        return nom;
+    }
 }

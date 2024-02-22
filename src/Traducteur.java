@@ -5,7 +5,6 @@ public class Traducteur {
 
     private static boolean color;
     private static Image image;
-    private static File file;
 
     public static void lire(Image i, File f) throws IOException
     {
@@ -42,6 +41,14 @@ public class Traducteur {
         return ((ImageCouleur)i).couleur_preponderante();
     }
 
+    public static boolean sontIdentiques(Image i1, Image i2)
+    {
+        if(color)
+            return ((ImageCouleur) i1).sontIdentiques(i2);
+        else
+            return ((ImageNoirBlanc) i1).sontIdentiques(i2);
+    }
+
     public static void initialize(boolean isColor)
     {
         color = isColor;
@@ -59,9 +66,14 @@ public class Traducteur {
 
         initialize(true);
 
-        lire(image, f);
+        Image copieImage = new ImageCouleur();
 
-        System.out.println(couleur_preponderante(image));
+        lire(image, f);
+        lire(copieImage, f);
+
+        System.out.println(sontIdentiques(image, copieImage));
+
+        //System.out.println(couleur_preponderante(image));
 
         //eclaircir_noircir(image, 100);
 
