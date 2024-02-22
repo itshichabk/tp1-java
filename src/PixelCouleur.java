@@ -5,7 +5,6 @@ public class PixelCouleur  implements Pixel {
 
     private Couleur c; // R - 0 / G - 1 / B - 2
 
-
     public PixelCouleur() {
         c = new Couleur();
     }
