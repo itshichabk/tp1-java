@@ -33,16 +33,27 @@ public class ImageCouleur extends Image {
         }
     }
 
-    public void ecrire(File f) throws IOException {
+    public void ecrire(File f) throws IOException
+    {
         FileWriter fw = new FileWriter(f);
 
-        fw.write("P2\n" + getWidth() + " " + getHeight() + "\n" + getMax() + "\n");
+        fw.write("P3\n" + getWidth() + " " + getHeight() + "\n" + getMax() + "\n");
 
-        for (int i = 0; i < getHeight() - 1; i++) {
-            for (int j = 0; j < getWidth() - 1; j++) {
+        for (int i = 0; i < getHeight(); i++)
+        {
+            for (int j = 0; j < getWidth(); j++)
+            {
                 ((PixelCouleur)getPixel(i, j)).ecrire(fw);
             }
             fw.write("\n");
         }
+
+        fw.flush();
+        fw.close();
+    }
+
+    public void eclaircir_noircir(int v)
+    {
+
     }
 }

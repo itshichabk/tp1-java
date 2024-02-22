@@ -29,7 +29,7 @@ public class PixelNoirBlanc implements Pixel {
     }
 
     public void ecrire(FileWriter fw) throws IOException {
-        fw.write(luminosite);
+        fw.write(toString());
     }
 
     @Override

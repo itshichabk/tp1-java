@@ -37,30 +37,47 @@ public class ImageNoirBlanc extends Image
         {
             for(int j = 0; j < getWidth(); j++)
             {
-                ((PixelNoirBlanc)getPixel(i, j)).lire(in);
+                getPixel(i, j).lire(in);
             }
         }
     }
 
-    public void ecrire(File f) throws IOException {
+    public void ecrire(File f) throws IOException
+    {
         FileWriter fw = new FileWriter(f);
 
         fw.write("P2\n" + getWidth() + " " + getHeight() + "\n" + getMax() + "\n");
 
-        for (int i = 0; i < getHeight() - 1; i++) {
-            for (int j = 0; j < getWidth() - 1; j++) {
-                ((PixelNoirBlanc)getPixel(i, j)).ecrire(fw);
+        int iCount = 0, jCount = 0;
+
+        for (int i = 0; i < getHeight(); i++)
+        {
+            for (int j = 0; j < getWidth(); j++)
+            {
+                getPixel(i, j).ecrire(fw);
                 fw.write(" ");
             }
+
             fw.write("\n");
+        }
+
+        fw.flush();
+        fw.close();
+    }
+
+    public void eclaircir_noircir(int v)
+    {
+        for (int i = 0; i < getHeight(); i++)
+        {
+            for (int j = 0; j < getWidth(); j++)
+            {
+                getPixel(i, j).eclaircir_noircir(v, maximum);
+            }
         }
     }
 
-    public void eclaircir_noircir(int v) {
-
-    }
-
-    public void reduire() {
+    public void reduire()
+    {
 
     }
 }
