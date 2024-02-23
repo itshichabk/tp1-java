@@ -24,6 +24,16 @@ public class PixelNoirBlanc implements Pixel {
             luminosite = max;
     }
 
+    public int getLuminosite()
+    {
+        return luminosite;
+    }
+
+    public void setLuminosite(int luminosite)
+    {
+        this.luminosite = luminosite;
+    }
+
     public void lire(Scanner s) {
         luminosite = s.nextInt();
     }
@@ -35,6 +45,13 @@ public class PixelNoirBlanc implements Pixel {
     @Override
     public String toString() {
         return Integer.toString(luminosite);
+    }
+
+    public PixelNoirBlanc reduire(PixelNoirBlanc droite, PixelNoirBlanc bas, PixelNoirBlanc basDroite)
+    {
+        int moyenneLum = (luminosite + droite.luminosite + bas.luminosite + basDroite.luminosite) / 4;
+
+        return new PixelNoirBlanc(moyenneLum);
     }
 
 }

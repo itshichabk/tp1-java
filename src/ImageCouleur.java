@@ -57,6 +57,47 @@ public class ImageCouleur extends Image {
 
     }
 
+    public void reduire()
+    {
+        ArrayList<Pixel[]> newMatrice = new ArrayList<Pixel[]>();
+        int newWidth = getWidth() / 2;
+        int newHeight = getHeight() / 2;
+
+        for (int i = 0; i < newHeight; i++)
+        {
+            newMatrice.add(new PixelCouleur[newWidth]);
+
+            for (int j = 0; j < newWidth; j++)
+            {
+                PixelCouleur pixelCourant = (PixelCouleur)getPixel(2*i, 2*j);
+                PixelCouleur pixelDroite = new PixelCouleur();
+                PixelCouleur pixelBas = new PixelCouleur();
+                PixelCouleur pixelBasDroite = new PixelCouleur();
+
+                if(2*j - 1 < getWidth())
+                {
+                    pixelDroite.setCouleur(((PixelCouleur) getPixel(2*i, 2*j + 1)).getCouleur());
+                }
+
+                if(2*i - 1 < getHeight())
+                {
+                    pixelBas.setCouleur(((PixelCouleur) getPixel(2*i + 1, 2*j)).getCouleur());
+                }
+
+                if(2*j - 1 < getWidth() && 2*i - 1 < getHeight())
+                {
+                    pixelBasDroite.setCouleur(((PixelCouleur) getPixel(2*i + 1, 2*j + 1)).getCouleur());
+                }
+
+                newMatrice.get(i)[j] = pixelCourant.reduire(pixelDroite, pixelBas, pixelBasDroite);
+            }
+        }
+
+        setWidth(newWidth);
+        setHeight(newHeight);
+        updateMatrice(newMatrice);
+    }
+
     public Couleur couleur_preponderante()
     {
         int max = ((PixelCouleur)getPixel(0, 0)).getCouleurMoyenne();

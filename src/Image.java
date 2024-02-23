@@ -31,6 +31,11 @@ public class Image {
         }
     }
 
+    public void updateMatrice(ArrayList<Pixel[]> newMatrice)
+    {
+        matrice = newMatrice;
+    }
+
     public int getMax() {
         return max;
     }

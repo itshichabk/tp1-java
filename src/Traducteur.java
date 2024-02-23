@@ -60,19 +60,28 @@ public class Traducteur {
             image = new ImageNoirBlanc();
     }
 
+    public static void reduire(Image i)
+    {
+        if(color)
+            ((ImageCouleur) i).reduire();
+        else
+            ((ImageNoirBlanc) i).reduire();
+    }
+
     public static void main(String args[]) throws IOException
     {
-        File f = new File("test.pgm");
-        File nf1 = new File("normal.pgm");
-        File nf2 = new File("pivot.pgm");
+        File f = new File("reduit.ppm");
+        File fRed = new File("reduitreduit.ppm");
+        //File nf1 = new File("normal.pgm");
+        //File nf2 = new File("pivot.pgm");
 
-        initialize(false);
-
-        Image copieImage = new ImageNoirBlanc();
+        initialize(true);
+        //
+        //Image copieImage = new ImageNoirBlanc();
 
         lire(image, f);
-        ecrire(image, nf1);
-        image.pivoter90();
+        //ecrire(image, nf1);
+        //image.pivoter90();
         //lire(copieImage, nf1);
 
         //System.out.println(sontIdentiques(image, copieImage));
@@ -80,6 +89,9 @@ public class Traducteur {
 
         //eclaircir_noircir(image, 100);
 
-        ecrire(image, nf2);
+        reduire(image);
+
+
+        ecrire(image, fRed);
     }
 }

@@ -13,7 +13,6 @@ public class PixelCouleur  implements Pixel {
         c = new Couleur(r, g, b);
     }
 
-
     public void eclaircir_noircir(int v, int max) {
 
     }
@@ -26,6 +25,11 @@ public class PixelCouleur  implements Pixel {
     public Couleur getCouleur()
     {
         return c;
+    }
+
+    public void setCouleur(Couleur c)
+    {
+        this.c = c;
     }
 
     public void lire(Scanner s) {
@@ -49,5 +53,14 @@ public class PixelCouleur  implements Pixel {
             text += c.getByIndex(i) + " ";
 
         return text;
+    }
+
+    public PixelCouleur reduire(PixelCouleur droite, PixelCouleur bas, PixelCouleur basDroite)
+    {
+        int moyenneR = (c.getR() + droite.getCouleur().getR() + bas.getCouleur().getR() + basDroite.getCouleur().getR()) / 4;
+        int moyenneG = (c.getG() + droite.getCouleur().getG() + bas.getCouleur().getG() + basDroite.getCouleur().getG()) / 4;
+        int moyenneB = (c.getB() + droite.getCouleur().getB() + bas.getCouleur().getB() + basDroite.getCouleur().getB()) / 4;
+
+        return new PixelCouleur(moyenneR, moyenneG, moyenneB);
     }
 }

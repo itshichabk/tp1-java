@@ -78,6 +78,42 @@ public class ImageNoirBlanc extends Image
 
     public void reduire()
     {
+        ArrayList<Pixel[]> newMatrice = new ArrayList<Pixel[]>();
+        int newWidth = getWidth() / 2;
+        int newHeight = getHeight() / 2;
 
+        for (int i = 0; i < newHeight; i++)
+        {
+            newMatrice.add(new PixelNoirBlanc[newWidth]);
+
+            for (int j = 0; j < newWidth; j++)
+            {
+                PixelNoirBlanc pixelCourant = (PixelNoirBlanc)getPixel(2*i, 2*j);
+                PixelNoirBlanc pixelDroite = new PixelNoirBlanc();
+                PixelNoirBlanc pixelBas = new PixelNoirBlanc();
+                PixelNoirBlanc pixelBasDroite = new PixelNoirBlanc();
+
+                if(2*j - 1 < getWidth())
+                {
+                    pixelDroite.setLuminosite(((PixelNoirBlanc) getPixel(2*i, 2*j + 1)).getLuminosite());
+                }
+
+                if(2*i - 1 < getHeight())
+                {
+                    pixelBas.setLuminosite(((PixelNoirBlanc) getPixel(2*i + 1, 2*j)).getLuminosite());
+                }
+
+                if(2*j - 1 < getWidth() && 2*i - 1 < getHeight())
+                {
+                    pixelBasDroite.setLuminosite(((PixelNoirBlanc) getPixel(2*i + 1, 2*j + 1)).getLuminosite());
+                }
+
+                newMatrice.get(i)[j] = pixelCourant.reduire(pixelDroite, pixelBas, pixelBasDroite);
+            }
+        }
+
+        setWidth(newWidth);
+        setHeight(newHeight);
+        updateMatrice(newMatrice);
     }
 }
