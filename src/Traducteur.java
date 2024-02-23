@@ -1,5 +1,4 @@
 import java.io.*;
-import java.util.*;
 
 public class Traducteur {
 
@@ -43,10 +42,12 @@ public class Traducteur {
 
     public static boolean sontIdentiques(Image i1, Image i2)
     {
-        if(color)
-            return ((ImageCouleur) i1).sontIdentiques(i2);
-        else
-            return ((ImageNoirBlanc) i1).sontIdentiques(i2);
+       return i1.sontIdentiques(i2);
+    }
+
+    public static void pivoter90(Image i1)
+    {
+        i1.pivoter90();
     }
 
     public static void initialize(boolean isColor)
@@ -61,22 +62,24 @@ public class Traducteur {
 
     public static void main(String args[]) throws IOException
     {
-        File f = new File("test.ppm");
-        File nf = new File("couleur.txt");
+        File f = new File("test.pgm");
+        File nf1 = new File("normal.pgm");
+        File nf2 = new File("pivot.pgm");
 
-        initialize(true);
+        initialize(false);
 
-        Image copieImage = new ImageCouleur();
+        Image copieImage = new ImageNoirBlanc();
 
         lire(image, f);
-        lire(copieImage, f);
+        ecrire(image, nf1);
+        image.pivoter90();
+        //lire(copieImage, nf1);
 
-        System.out.println(sontIdentiques(image, copieImage));
-
+        //System.out.println(sontIdentiques(image, copieImage));
         //System.out.println(couleur_preponderante(image));
 
         //eclaircir_noircir(image, 100);
 
-        //ecrire(image, nf);
+        ecrire(image, nf2);
     }
 }

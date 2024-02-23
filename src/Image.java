@@ -17,16 +17,6 @@ public class Image {
         nom = "";
     }
 
-    public ArrayList<Pixel[]> getMatrice()
-    {
-        return matrice;
-    }
-
-    public Pixel getPixel(int y, int x)
-    {
-        return matrice.get(y)[x];
-    }
-
     public void readDimensions(File f) throws IOException {
         Scanner in = new Scanner(f);
 
@@ -78,7 +68,19 @@ public class Image {
 
     public void pivoter90()
     {
+        Image temp = new Image();
+        temp.setHeight(getWidth());
+        temp.setWidth(getHeight());
+        temp.intializeMatrice();
 
+        for (int i = 0; i < getHeight(); i++) {
+            for (int j = 0; j < getWidth(); j++) {
+                temp.getMatrice().get(j)[getHeight() - 1 - i] = matrice.get(i)[j];
+            }
+        }
+        height = temp.getHeight();
+        width = temp.getWidth();
+        matrice = temp.getMatrice();
     }
 
     public int getWidth()
@@ -94,5 +96,30 @@ public class Image {
     public String getNom()
     {
         return nom;
+    }
+
+    public ArrayList<Pixel[]> getMatrice()
+    {
+        return matrice;
+    }
+
+    public Pixel getPixel(int y, int x)
+    {
+        return matrice.get(y)[x];
+    }
+
+    public void setWidth(int width) {
+        this.width = width;
+    }
+
+    public void setHeight(int height) {
+        this.height = height;
+    }
+
+    public void intializeMatrice() {
+        for (int i = 0; i < height; i++)
+        {
+            matrice.add(new Pixel[width]);
+        }
     }
 }
