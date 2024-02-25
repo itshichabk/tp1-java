@@ -81,17 +81,7 @@ public class Traducteur {
         //File nf2 = new File("pivot.pgm");
 
         initialize(true);
-<<<<<<< HEAD
 
-        lire(image, f);
-        Image copieImage = new ImageCouleur();
-
-        extraire(image, 0,0,16,16);
-        eclaircir_noircir(image, 50);
-
-        System.out.println(sontIdentiques(image, copieImage));
-=======
-        //
         //Image copieImage = new ImageNoirBlanc();
 
         lire(image, f);
@@ -108,6 +98,5 @@ public class Traducteur {
 
 
         ecrire(image, fRed);
->>>>>>> 34b1123fdce78ad12eebfca48b0204b151b23c75
     }
 }
