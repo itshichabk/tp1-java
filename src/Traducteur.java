@@ -1,5 +1,4 @@
 import java.io.*;
-import java.util.*;
 
 public class Traducteur {
 
@@ -48,10 +47,12 @@ public class Traducteur {
 
     public static boolean sontIdentiques(Image i1, Image i2)
     {
-        if(color)
-            return ((ImageCouleur) i1).sontIdentiques(i2);
-        else
-            return ((ImageNoirBlanc) i1).sontIdentiques(i2);
+       return i1.sontIdentiques(i2);
+    }
+
+    public static void pivoter90(Image i1)
+    {
+        i1.pivoter90();
     }
 
     public static void initialize(boolean isColor)
@@ -64,12 +65,23 @@ public class Traducteur {
             image = new ImageNoirBlanc();
     }
 
+    public static void reduire(Image i)
+    {
+        if(color)
+            ((ImageCouleur) i).reduire();
+        else
+            ((ImageNoirBlanc) i).reduire();
+    }
+
     public static void main(String args[]) throws IOException
     {
-        File f = new File("test.ppm");
-        File nf = new File("couleur.txt");
+        File f = new File("reduit.ppm");
+        File fRed = new File("reduitreduit.ppm");
+        //File nf1 = new File("normal.pgm");
+        //File nf2 = new File("pivot.pgm");
 
         initialize(true);
+<<<<<<< HEAD
 
         lire(image, f);
         Image copieImage = new ImageCouleur();
@@ -78,5 +90,24 @@ public class Traducteur {
         eclaircir_noircir(image, 50);
 
         System.out.println(sontIdentiques(image, copieImage));
+=======
+        //
+        //Image copieImage = new ImageNoirBlanc();
+
+        lire(image, f);
+        //ecrire(image, nf1);
+        //image.pivoter90();
+        //lire(copieImage, nf1);
+
+        //System.out.println(sontIdentiques(image, copieImage));
+        //System.out.println(couleur_preponderante(image));
+
+        //eclaircir_noircir(image, 100);
+
+        reduire(image);
+
+
+        ecrire(image, fRed);
+>>>>>>> 34b1123fdce78ad12eebfca48b0204b151b23c75
     }
 }
