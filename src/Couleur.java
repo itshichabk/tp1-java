@@ -42,6 +42,9 @@ public class Couleur{
     public int getByIndex(int index) {
         return c[index];
     }
+    public int setByIndex(int index, int val) {
+        return c[index] = val;
+    }
 
     @Override
     public String toString()

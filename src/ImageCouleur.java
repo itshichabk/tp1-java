@@ -54,7 +54,13 @@ public class ImageCouleur extends Image {
 
     public void eclaircir_noircir(int v)
     {
-
+        for (int i = 0; i < getHeight(); i++)
+        {
+            for (int j = 0; j < getWidth(); j++)
+            {
+                getPixel(i, j).eclaircir_noircir(v, this.getMax());
+            }
+        }
     }
 
     public Couleur couleur_preponderante()

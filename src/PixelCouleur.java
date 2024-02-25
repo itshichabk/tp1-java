@@ -15,7 +15,15 @@ public class PixelCouleur  implements Pixel {
 
 
     public void eclaircir_noircir(int v, int max) {
+        for (int i = 0; i < 3; i++) {
+            this.c.setByIndex(i, this.c.getByIndex(i) + v);
 
+            if (this.c.getByIndex(i) > max) {
+                this.c.setByIndex(i, max);
+            } else if (this.c.getByIndex(i) < 0) {
+                this.c.setByIndex(i, 0);
+            }
+        }
     }
 
     public int getCouleurMoyenne()

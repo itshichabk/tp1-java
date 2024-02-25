@@ -23,9 +23,14 @@ public class Traducteur {
             ((ImageNoirBlanc) i).ecrire(f);
     }
 
-    public static void copier(Image i1, Image i2)
+    public static void copier(Image main, Image toCopy)
     {
+        main.copier(toCopy);
+    }
 
+    public static void extraire(Image i, int p1, int c1, int p2, int c2)
+    {
+        i.extraire(p1, c1, p2, c2);
     }
 
     public static void eclaircir_noircir(Image i, int v)
@@ -66,17 +71,12 @@ public class Traducteur {
 
         initialize(true);
 
+        lire(image, f);
         Image copieImage = new ImageCouleur();
 
-        lire(image, f);
-        lire(copieImage, f);
+        extraire(image, 0,0,16,16);
+        eclaircir_noircir(image, 50);
 
         System.out.println(sontIdentiques(image, copieImage));
-
-        //System.out.println(couleur_preponderante(image));
-
-        //eclaircir_noircir(image, 100);
-
-        //ecrire(image, nf);
     }
 }

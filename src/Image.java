@@ -45,14 +45,35 @@ public class Image {
         return max;
     }
 
-    public void copier(Image i)
+    public void copier(Image toCopy)
     {
-
+        this.nom = toCopy.getNom();
+        this.width = toCopy.getWidth();
+        this.height = toCopy.getHeight();
+        this.max = toCopy.getMax();
+        this.matrice = toCopy.getMatrice();
     }
 
-    public void extraire(int p1, int c1, int p2, int c2)
+    public void extraire(int x1, int y1, int x2, int y2)
     {
+        if (x1 < x2 && y1 < y2) {
+            ArrayList<Pixel[]> nm = new ArrayList<Pixel[]>();
 
+            for (int i = 0; i < getHeight(); i++) {
+                if (i >= y1 && i <= y2) { nm.add(new Pixel[x2 - x1 + 1]); }
+
+                for (int j = 0; j < getWidth(); j++) {
+                    if ((i >= y1 && i <= y2) && (j >= x1 && j <= x2)) {
+                        nm.get(i - y1)[j - x1] = this.matrice.get(i)[j];
+                    }
+                }
+            }
+            this.matrice = nm;
+            this.height = nm.size();
+            this.width = nm.get(0).length;
+        } else {
+            System.out.println("Les coordonnées données sont erronnées");
+        }
     }
 
     public void reduire()
