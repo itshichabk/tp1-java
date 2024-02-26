@@ -94,6 +94,15 @@ public class Image
      */
     public void extraire(int x1, int y1, int x2, int y2)
     {
+        try{
+            Pixel temp1 = matrice.get(x1)[y1];
+            Pixel temp2 = matrice.get(x2)[y2];
+        } catch (IndexOutOfBoundsException e) {
+            System.out.println("Les coordonnées données(" + x1 + ", " + y1
+                               + ", " + x2 + ", " + y2 + ")sont out of range");
+            return;
+        }
+
         if (x1 < x2 && y1 < y2)
         {
             ArrayList<Pixel[]> nm = new ArrayList<>();
