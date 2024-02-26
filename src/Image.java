@@ -1,12 +1,26 @@
+/**
+ * @author Antoine Auger, Hicham Abekiri, Mathis Leduc
+ * @version 1.0
+ *
+ * Cette classe implémente une image.
+ */
+
 import java.util.*;
 import java.io.*;
 
-public class Image {
+public class Image
+{
+    /**
+     * Matrice qui contiendra l'ensemble des pixels de l'image
+     */
     private ArrayList<Pixel[]> matrice;
-    private int width;
-    private int height;
+
+    /**
+     * Dimensions de l'image (largeur, hauteur)
+     */
+    private int width, height;
+
     private int max;
-    private String nom;
 
     public Image()
     {
@@ -14,9 +28,13 @@ public class Image {
         width = 0;
         height = 0;
         max = 0;
-        nom = "";
     }
 
+    /**
+     * Importe les dimensions de l'image à partir d'un fichier, puis initialise la matrice de pixels avec les dimensions lues.
+     * @param f Le fichier à importer
+     * @throws FileNotFoundException si l'image n'a pas été trouvée
+     */
     public void readDimensions(File f) throws FileNotFoundException
     {
         try
@@ -28,10 +46,7 @@ public class Image {
             height = in.nextInt();
             max = in.nextInt();
 
-            for (int i = 0; i < height; i++)
-            {
-                matrice.add(new Pixel[width]);
-            }
+            intializeMatrice();
         }
         catch(FileNotFoundException e)
         {
@@ -39,6 +54,10 @@ public class Image {
         }
     }
 
+    /**
+     * Remplace la matrice de pixels par une nouvelle
+     * @param newMatrice la nouvelle matrice de pixels
+     */
     public void updateMatrice(ArrayList<Pixel[]> newMatrice)
     {
         matrice = newMatrice;
@@ -54,15 +73,25 @@ public class Image {
         this.max = max;
     }
 
+    /**
+     * Copie les informations d'une image à une autre
+     * @param toCopy l'image qui recevra les informations de la première image
+     */
     public void copier(Image toCopy)
     {
-        toCopy.setNom(this.nom);
         toCopy.setWidth(this.width);
         toCopy.setHeight(this.height);
         toCopy.setMax(this.max);
         toCopy.updateMatrice(this.matrice);
     }
 
+    /**
+     * Extraire un sous ensemble de l’image à partir de du point x1,y1 jusqu’à x2,y2
+     * @param x1 Position horizontale du point 1
+     * @param y1 Position verticale du point 1
+     * @param x2 Position horizontale du point 2
+     * @param y2 Position verticale du point 2
+     */
     public void extraire(int x1, int y1, int x2, int y2)
     {
         if (x1 < x2 && y1 < y2)
@@ -94,10 +123,15 @@ public class Image {
         }
     }
 
+    /**
+     * Compare l'image à une autre
+     * @param img l'image avec laquelle la comparaison sera effectuée
+     * @return si les deux images sont identiques
+     */
     public boolean sontIdentiques(Image img)
     {
         if ((getWidth() != img.getWidth()) || (getHeight() != img.getHeight())
-                || (!Objects.equals(getNom(), img.getNom())) || (getMax() != img.getMax()))
+                || (getMax() != img.getMax()))
         {
             return false;
         }
@@ -115,6 +149,9 @@ public class Image {
         return true;
     }
 
+    /**
+     * Permet de tourner de 90 degrés l’image.
+     */
     public void pivoter90()
     {
         Image temp = new Image();
@@ -142,16 +179,6 @@ public class Image {
         return height;
     }
 
-    public String getNom()
-    {
-        return nom;
-    }
-
-    public void setNom(String nom)
-    {
-        this.nom = nom;
-    }
-
     public ArrayList<Pixel[]> getMatrice()
     {
         return matrice;
@@ -170,6 +197,9 @@ public class Image {
         this.height = height;
     }
 
+    /**
+     * Initialise la matrice en tenant compte des dimensions de l'image
+     */
     public void intializeMatrice()
     {
         for (int i = 0; i < height; i++)

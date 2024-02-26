@@ -1,3 +1,10 @@
+/**
+ * @author Antoine Auger, Hicham Abekiri, Mathis Leduc
+ * @version 1.0
+ *
+ * Cette classe implémente une image colorée.
+ */
+
 import java.util.*;
 import java.io.*;
 
@@ -8,6 +15,14 @@ public class ImageCouleur extends Image {
         super();
     }
 
+    /**
+     * Importe une image noir et blanc à partir d'un fichier
+     *
+     * @param f Le fichier à lire
+     * @throws FileNotFoundException si le fichier n'existe pas
+     * @throws NoSuchElementException si le contenu du fichier est invalide
+     * @throws WrongImageTypeException si le type d'image dans le fichier est incompatible
+     */
     public void lire(File f) throws FileNotFoundException, NoSuchElementException, WrongImageTypeException
     {
         try
@@ -31,6 +46,14 @@ public class ImageCouleur extends Image {
         }
     }
 
+    /**
+     * Vérifie si le fichier est valide et si le type d'image dans le fichier est compatible avec le type d'objet
+     *
+     * @param f Le fichier à lire
+     * @throws FileNotFoundException si le fichier n'existe pas
+     * @throws NoSuchElementException si le contenu du fichier est invalide
+     * @throws WrongImageTypeException si le type d'image dans le fichier est incompatible
+     */
     public void verifyType(File f) throws FileNotFoundException, NoSuchElementException, WrongImageTypeException
     {
         try
@@ -57,6 +80,9 @@ public class ImageCouleur extends Image {
         }
     }
 
+    /**
+     * Initialise des pixels "vides" dans la matrice pour que leurs couleurs soient importées par la suite.
+     */
     public void initializePixels()
     {
         for (int i = 0; i < getHeight(); i++)
@@ -68,6 +94,12 @@ public class ImageCouleur extends Image {
         }
     }
 
+    /**
+     * Importe le contenu de l'image depuis le fichier dans l'objet
+     * @param f Le fichier à importer
+     * @throws FileNotFoundException si le fichier n'existe pas
+     * @throws NoSuchElementException si le contenu du fichier est invalide
+     */
     public void lireMatrice(File f) throws FileNotFoundException, NoSuchElementException
     {
         try
@@ -96,6 +128,10 @@ public class ImageCouleur extends Image {
         }
     }
 
+    /**
+     * Enregistre l'image dans un fichier PPM
+     * @param f le fichier destination
+     */
     public void ecrire(File f)
     {
         try
@@ -122,6 +158,10 @@ public class ImageCouleur extends Image {
         }
     }
 
+    /**
+     * Éclaircir ou noircir tous les pixels de l'image
+     * @param v Valeur de luminosité (positive ou négative)
+     */
     public void eclaircir_noircir(int v)
     {
         for (int i = 0; i < getHeight(); i++)
@@ -133,6 +173,9 @@ public class ImageCouleur extends Image {
         }
     }
 
+    /**
+     * Réduit l'image en combinant chaque ensemble de 4 pixels en un seul.
+     */
     public void reduire()
     {
         ArrayList<Pixel[]> newMatrice = new ArrayList<>();
@@ -174,6 +217,10 @@ public class ImageCouleur extends Image {
         updateMatrice(newMatrice);
     }
 
+    /**
+     * Retourne la couleur prépondérante de l'image.
+     * @return la couleur prépondérante de l'image.
+     */
     public Couleur couleur_preponderante()
     {
         int max = ((PixelCouleur)getPixel(0, 0)).getCouleurMoyenne();

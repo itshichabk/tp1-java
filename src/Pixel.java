@@ -1,3 +1,10 @@
+/**
+ * @author Antoine Auger, Hicham Abekiri, Mathis Leduc
+ * @version 1.0
+ *
+ * Cette interface implémente un pixel.
+ */
+
 import java.io.*;
 import java.util.*;
 
