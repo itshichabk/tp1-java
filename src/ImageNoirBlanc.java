@@ -3,22 +3,62 @@ import java.io.*;
 
 public class ImageNoirBlanc extends Image
 {
-    private int maximum;
-
     public ImageNoirBlanc()
     {
         super();
     }
 
-    public void setMaximum(int max)
+    public void lire(File f) throws FileNotFoundException, NoSuchElementException, WrongImageTypeException
     {
-        maximum = max;
+        try
+        {
+            verifyType(f);
+            readDimensions(f);
+            initializePixels();
+            lireMatrice(f);
+        }
+        catch(FileNotFoundException e)
+        {
+            throw new FileNotFoundException("Erreur: fichier inexistant.");
+        }
+        catch(NoSuchElementException e)
+        {
+            throw new NoSuchElementException("Erreur: fichier corrompu.");
+        }
+        catch(WrongImageTypeException e)
+        {
+            throw new WrongImageTypeException();
+        }
     }
 
-    public void lire(File f) throws IOException
+    public void verifyType(File f) throws FileNotFoundException, NoSuchElementException, WrongImageTypeException
     {
-        readDimensions(f);
+        try
+        {
+            Scanner in = new Scanner(f);
+            String type = in.nextLine();
 
+            if(Objects.equals(type, "P3"))
+            {
+                throw new WrongImageTypeException();
+            }
+            else if(!Objects.equals(type, "P2"))
+            {
+                throw new NoSuchElementException();
+            }
+        }
+        catch(FileNotFoundException e)
+        {
+            throw new FileNotFoundException();
+        }
+        catch(NoSuchElementException e)
+        {
+            throw new NoSuchElementException();
+        }
+    }
+
+    public void initializePixels()
+    {
         for (int i = 0; i < getHeight(); i++)
         {
             for (int j = 0; j < getWidth(); j++)
@@ -26,43 +66,58 @@ public class ImageNoirBlanc extends Image
                 getMatrice().get(i)[j] = new PixelNoirBlanc();
             }
         }
+    }
 
-        Scanner in = new Scanner(f);
-
-        in.nextLine();
-        in.nextLine();
-        maximum = in.nextInt();
-
-        for(int i = 0; i < getHeight(); i++)
+    public void lireMatrice(File f) throws FileNotFoundException
+    {
+        try
         {
-            for(int j = 0; j < getWidth(); j++)
+            Scanner in = new Scanner(f);
+
+            in.nextLine();
+            in.nextLine();
+            setMax(in.nextInt());
+
+            for(int i = 0; i < getHeight(); i++)
             {
-                getPixel(i, j).lire(in);
+                for(int j = 0; j < getWidth(); j++)
+                {
+                    getPixel(i, j).lire(in);
+                }
             }
+        }
+        catch(FileNotFoundException e)
+        {
+            throw new FileNotFoundException();
         }
     }
 
-    public void ecrire(File f) throws IOException
+    public void ecrire(File f)
     {
-        FileWriter fw = new FileWriter(f);
-
-        fw.write("P2\n" + getWidth() + " " + getHeight() + "\n" + getMax() + "\n");
-
-        int iCount = 0, jCount = 0;
-
-        for (int i = 0; i < getHeight(); i++)
+        try
         {
-            for (int j = 0; j < getWidth(); j++)
+            FileWriter fw = new FileWriter(f);
+
+            fw.write("P2\n" + getWidth() + " " + getHeight() + "\n" + getMax() + "\n");
+
+            for (int i = 0; i < getHeight(); i++)
             {
-                getPixel(i, j).ecrire(fw);
-                fw.write(" ");
+                for (int j = 0; j < getWidth(); j++)
+                {
+                    getPixel(i, j).ecrire(fw);
+                    fw.write(" ");
+                }
+
+                fw.write("\n");
             }
 
-            fw.write("\n");
+            fw.flush();
+            fw.close();
         }
-
-        fw.flush();
-        fw.close();
+        catch(IOException e)
+        {
+            System.out.println("Erreur lors de l'écriture du fichier.");
+        }
     }
 
     public void eclaircir_noircir(int v)
@@ -71,14 +126,14 @@ public class ImageNoirBlanc extends Image
         {
             for (int j = 0; j < getWidth(); j++)
             {
-                getPixel(i, j).eclaircir_noircir(v, maximum);
+                getPixel(i, j).eclaircir_noircir(v, getMax());
             }
         }
     }
 
     public void reduire()
     {
-        ArrayList<Pixel[]> newMatrice = new ArrayList<Pixel[]>();
+        ArrayList<Pixel[]> newMatrice = new ArrayList<>();
         int newWidth = getWidth() / 2;
         int newHeight = getHeight() / 2;
 

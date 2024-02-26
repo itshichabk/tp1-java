@@ -1,30 +1,45 @@
 import java.io.*;
 
-public class Traducteur {
-
-    private static boolean color;
-    private static Image image;
-
-    public static void lire(Image i, File f) throws IOException
+public class Traducteur
+{
+    public static void lire(Image i, File f) throws IOException, WrongImageTypeException
     {
-        if(color)
-            ((ImageCouleur) i).lire(f);
-        else
-            ((ImageNoirBlanc) i).lire(f);
+        try
+        {
+            if(i instanceof ImageCouleur)
+                ((ImageCouleur) i).lire(f);
+
+            else if(i instanceof ImageNoirBlanc)
+                ((ImageNoirBlanc) i).lire(f);
+
+        }
+        catch(WrongImageTypeException e)
+        {
+            throw new WrongImageTypeException("Type d'image à importer incompatible avec type prédéfini.");
+        }
 
     }
 
     public static void ecrire(Image i, File f) throws IOException
     {
-        if(color)
+        if(i instanceof ImageCouleur)
             ((ImageCouleur) i).ecrire(f);
-        else
+
+        else if(i instanceof ImageNoirBlanc)
             ((ImageNoirBlanc) i).ecrire(f);
     }
 
-    public static void copier(Image main, Image toCopy)
+    public static void copier(Image main, Image toCopy) throws WrongImageTypeException
     {
-        main.copier(toCopy);
+        if((main instanceof ImageNoirBlanc && toCopy instanceof ImageNoirBlanc) ||
+           (main instanceof ImageCouleur   && toCopy instanceof ImageCouleur))
+        {
+            main.copier(toCopy);
+        }
+        else
+        {
+            throw new WrongImageTypeException("Impossible de copier: images de types différents.");
+        }
     }
 
     public static void extraire(Image i, int p1, int c1, int p2, int c2)
@@ -34,9 +49,10 @@ public class Traducteur {
 
     public static void eclaircir_noircir(Image i, int v)
     {
-        if(color)
+        if(i instanceof ImageCouleur)
             ((ImageCouleur) i).eclaircir_noircir(v);
-        else
+
+        else if(i instanceof ImageNoirBlanc)
             ((ImageNoirBlanc) i).eclaircir_noircir(v);
     }
 
@@ -55,48 +71,49 @@ public class Traducteur {
         i1.pivoter90();
     }
 
-    public static void initialize(boolean isColor)
-    {
-        color = isColor;
-
-        if(color)
-            image = new ImageCouleur();
-        else
-            image = new ImageNoirBlanc();
-    }
-
     public static void reduire(Image i)
     {
-        if(color)
+        if(i instanceof ImageCouleur)
             ((ImageCouleur) i).reduire();
-        else
+
+        else if(i instanceof ImageNoirBlanc)
             ((ImageNoirBlanc) i).reduire();
     }
 
-    public static void main(String args[]) throws IOException
+    public static void main(String[] args)
     {
-        File f = new File("reduit.ppm");
-        File fRed = new File("reduitreduit.ppm");
-        //File nf1 = new File("normal.pgm");
-        //File nf2 = new File("pivot.pgm");
+        Image image = new ImageCouleur();
+        Image image2 = new ImageCouleur();
 
-        initialize(true);
+        try
+        {
+            File f = new File("test.ppm");
 
-        //Image copieImage = new ImageNoirBlanc();
+            lire(image, f);
+            pivoter90(image);
+            copier(image, image2);
 
-        lire(image, f);
-        //ecrire(image, nf1);
-        //image.pivoter90();
-        //lire(copieImage, nf1);
+            eclaircir_noircir(image, -100);
+            extraire(image, 150, 150, 250, 250);
 
-        //System.out.println(sontIdentiques(image, copieImage));
-        //System.out.println(couleur_preponderante(image));
+            System.out.println(couleur_preponderante(image));
+            System.out.println(sontIdentiques(image, image2));
 
-        //eclaircir_noircir(image, 100);
+            pivoter90(image);
+            reduire(image);
 
-        reduire(image);
+            File fOut1 = new File("testout1.ppm");
+            File fOut2 = new File("testout2.ppm");
 
+            ecrire(image2, fOut1);
+            ecrire(image, fOut2);
+        }
 
-        ecrire(image, fRed);
+        catch(WrongImageTypeException | IOException e)
+        {
+            e.printStackTrace();
+            System.exit(1);
+        }
+
     }
 }

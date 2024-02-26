@@ -34,16 +34,26 @@ public class PixelNoirBlanc implements Pixel {
         this.luminosite = luminosite;
     }
 
-    public void lire(Scanner s) {
+    public void lire(Scanner s)
+    {
         luminosite = s.nextInt();
     }
 
-    public void ecrire(FileWriter fw) throws IOException {
-        fw.write(toString());
+    public void ecrire(FileWriter fw) throws IOException
+    {
+        try
+        {
+            fw.write(toString());
+        }
+        catch(IOException e)
+        {
+            throw new IOException("Erreur lors de l'écriture du pixel.");
+        }
     }
 
     @Override
-    public String toString() {
+    public String toString()
+    {
         return Integer.toString(luminosite);
     }
 

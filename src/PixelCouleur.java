@@ -13,7 +13,8 @@ public class PixelCouleur  implements Pixel {
         c = new Couleur(r, g, b);
     }
 
-    public void eclaircir_noircir(int v, int max) {
+    public void eclaircir_noircir(int v, int max)
+    {
         for (int i = 0; i < 3; i++) {
             this.c.setByIndex(i, this.c.getByIndex(i) + v);
 
@@ -49,8 +50,16 @@ public class PixelCouleur  implements Pixel {
         c.setC(rgb[0], rgb[1], rgb[2]);
     }
 
-    public void ecrire(FileWriter fw) throws IOException {
-        fw.write(toString());
+    public void ecrire(FileWriter fw) throws IOException
+    {
+        try
+        {
+            fw.write(toString());
+        }
+        catch(IOException e)
+        {
+            throw new IOException("Erreur lors de l'écriture du pixel.");
+        }
     }
 
     @Override
